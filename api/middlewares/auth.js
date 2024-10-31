@@ -4,6 +4,7 @@ const User = require("../models/User");
 
 const userIsLoggedIn = async (req, res, next) => {
   try {
+    console.log(req.cookies)
     const affiliate = req.cookies?.affiliate;
 
     if (!affiliate) {
@@ -31,6 +32,7 @@ const userIsLoggedIn = async (req, res, next) => {
 const userIsLoggedOut = async (req, res, next) => {
   try {
     const affiliate = req.cookies?.affiliate;
+    console.log(affiliate)
 
     if (!affiliate) {
       return next();
