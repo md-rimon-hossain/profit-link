@@ -3,25 +3,24 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.hostinger.com",
+//   port: 465, // or 465 if needed
+//   secure: true, // Use `true` for port 465, `false` for other ports
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  host: "mail.profit-link.io",
-  port: 587, // or 465 if needed
-  secure: false, // Use `true` for port 465, `false` for other ports
+  host: "smtp.gmail.com",
+  port: 587,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   }
 });
-
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.gmail.com",
-//   port: 587,
-//   secure: false,
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS
-//   }
-// });
 
 const sendVerificationEmail = async (emailData = {}) => {
   try {
