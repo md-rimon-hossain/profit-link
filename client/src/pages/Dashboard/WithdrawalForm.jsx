@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const WithdrawalForm = () => {
   // State variables
   const [network, setNetwork] = useState("");
-  const [tokenType, setTokenType] = useState("USDT");
+  const [tokenType, setTokenType] = useState("");
   const [amount, setAmount] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
   const [successData, setSuccessData] = useState(null);
@@ -17,8 +17,18 @@ const WithdrawalForm = () => {
   const user = useSelector((state) => state?.user?.user);
 
   // Handle network change
-  const handleNetworkChange = (e) => {
-    setNetwork(e.target.value);
+  const handleNetworkChange = () => {
+    if (tokenType === "USDT") {
+      setNetwork("BEP20");
+    };
+    
+    if (tokenType === "LOCUS") {
+      setNetwork("ERC20");
+    };
+
+    if (tokenType === "CRETA") {
+      setNetwork("POLYGON");
+    }
   };
 
   // Handle form submission (Example logic, replace with actual API call)
@@ -46,9 +56,9 @@ const WithdrawalForm = () => {
       setLoading(true);
       await axios.post(ServerApi.makeWithdrawal.url, formData, {
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        withCredentials: true
+        withCredentials: true,
       });
 
       setLoading(false);
@@ -99,10 +109,12 @@ const WithdrawalForm = () => {
           <select
             value={tokenType}
             onChange={(e) => setTokenType(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600 cursor-pointer">
-            <option>USDT</option>
-            <option>LOCUS </option>
-            <option>CRETA</option>
+            className="w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600 cursor-pointer"
+          >
+            <option value="">-- Select Token --</option>
+            <option value="USDT">USDT</option>
+            <option value="LOCUS">LOCUS </option>
+            <option value="CRETA">CRETA</option>
           </select>
         </div>
 
@@ -113,18 +125,18 @@ const WithdrawalForm = () => {
           </label>
           <select
             value={network}
-            onChange={handleNetworkChange}
+            onClick={handleNetworkChange}
             className="w-full px-4 py-2 border rounded-md cursor-pointer"
           >
             <option value="">-- Select Network --</option>
-            <option value="BEP20">BEP20</option>
+            <option>{network}</option>
           </select>
         </div>
 
         {/* Amount Input */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Enter Amount (USDT)
+            Enter Amount ({tokenType})
           </label>
           <input
             type="number"
