@@ -25,7 +25,7 @@ const {
   checkAdmin
 } = require("../middlewares/auth");
 
-userRoute.get("/all-users",  getAllUsers);
+userRoute.get("/all-users", checkAdmin, userIsLoggedIn, getAllUsers);
 
 userRoute.post(
   "/register",
