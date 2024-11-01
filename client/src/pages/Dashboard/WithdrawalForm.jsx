@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ServerApi from "../../api/serverApi";
 
 import { useSelector } from "react-redux";
@@ -16,15 +16,19 @@ const WithdrawalForm = () => {
 
   const user = useSelector((state) => state?.user?.user);
 
+  useEffect(() => {
+    handleNetworkChange();
+  }, [tokenType]);
+
   // Handle network change
   const handleNetworkChange = () => {
     if (tokenType === "USDT") {
       setNetwork("BEP20");
-    };
-    
+    }
+
     if (tokenType === "LOCUS") {
       setNetwork("ERC20");
-    };
+    }
 
     if (tokenType === "CRETA") {
       setNetwork("POLYGON");
@@ -125,7 +129,7 @@ const WithdrawalForm = () => {
           </label>
           <select
             value={network}
-            onClick={handleNetworkChange}
+            onChange={handleNetworkChange}
             className="w-full px-4 py-2 border rounded-md cursor-pointer"
           >
             <option value="">-- Select Network --</option>
