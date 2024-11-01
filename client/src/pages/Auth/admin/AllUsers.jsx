@@ -6,15 +6,22 @@ const AllUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Fetch all users from the server
-    axios
-      .get(ServerApi.allUsers.url)
-      .then((response) => {
+    const fetchUsers = async () => {
+      try {
+        // Fetch all users from the server with credentials
+        const response = await axios.get(ServerApi.allUsers.url, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Include credentials in the request
+        });
         setUsers(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching users:", error);
-      });
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   return (

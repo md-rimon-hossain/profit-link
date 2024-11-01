@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 const WithdrawalForm = () => {
   // State variables
   const [network, setNetwork] = useState("");
+  const [tokenType, setTokenType] = useState("USDT");
   const [amount, setAmount] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
   const [successData, setSuccessData] = useState(null);
@@ -34,11 +35,11 @@ const WithdrawalForm = () => {
     console.log("Destination Address:", destinationAddress);
 
     const formData = {
-      tokenType: "USDT",
+      tokenType: tokenType,
       network,
       amount,
       address: destinationAddress,
-      email: user?.email
+      email: user?.email,
     };
 
     try {
@@ -95,8 +96,13 @@ const WithdrawalForm = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Select Token
           </label>
-          <select className="w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600 cursor-pointer">
+          <select
+            value={tokenType}
+            onChange={(e) => setTokenType(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600 cursor-pointer">
             <option>USDT</option>
+            <option>LOCUS </option>
+            <option>CRETA</option>
           </select>
         </div>
 
