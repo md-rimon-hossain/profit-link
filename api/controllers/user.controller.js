@@ -53,7 +53,7 @@ const registerUser = async (req, res, next) => {
     let user = await User.findOne({ where: { email } });
 
     if (user?.verified) {
-      res.status(400).json({ msg: "User already exists" });
+      res.status(400).json({ msg: "User is already exists. Please login" });
     }
 
     if (user && !user.verified) {
