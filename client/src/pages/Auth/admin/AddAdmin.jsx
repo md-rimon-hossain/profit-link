@@ -15,7 +15,7 @@ const AdAdmin = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
+      await axios.post(
         ServerApi.addAdmin.url,
         { email },
         {

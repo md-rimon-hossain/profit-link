@@ -69,7 +69,27 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
+      const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+        navigator.userAgent
+      );
+      if (isAppleDevice) {
+        await axios.get(ServerApi.logout.url, {
+          headers: {
+            "Content-Type": "application/json",
+            affiliate: `${localStorage.getItem("affiliate")}`,
+          },
+          withCredentials: true,
+        });
+        localStorage.removeItem("affiliate");
+        dispatch(logout());
+        return;
+      }
+
       await axios.get(ServerApi.logout.url, {
+        headers: {
+          "Content-Type": "application/json",
+          affiliate: localStorage.getItem("affiliate"),
+        },
         withCredentials: true,
       });
       dispatch(logout());

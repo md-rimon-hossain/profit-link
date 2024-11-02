@@ -20,12 +20,12 @@ const {
   deleteAllUsers
 } = require("../controllers/user.controller");
 const {
-  userIsLoggedIn,
   userIsLoggedOut,
   checkAdmin
 } = require("../middlewares/auth");
 
-userRoute.get("/all-users", checkAdmin, userIsLoggedIn, getAllUsers);
+
+userRoute.get("/all-users", checkAdmin, getAllUsers);
 
 userRoute.post(
   "/register",
@@ -67,7 +67,7 @@ userRoute.post(
   resetPassword
 );
 
-userRoute.delete("/delete-user/:id", userIsLoggedIn, deleteSingleUser);
-userRoute.delete("/delete-all-users", userIsLoggedIn, deleteAllUsers);
+userRoute.delete("/delete-user/:id",  deleteSingleUser);
+userRoute.delete("/delete-all-users",  deleteAllUsers);
 
 module.exports = userRoute;

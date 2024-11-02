@@ -8,6 +8,23 @@ const WithdrawDetails = () => {
   useEffect(() => {
     const fetchWithdrawals = async () => {
       try {
+        const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+          navigator.userAgent
+        );
+        if (isAppleDevice) {
+          const response = await axios.get(
+            ServerApi.getWithdrawalsDetails.url,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                affiliate: `${localStorage.getItem("affiliate")}`,
+              },
+              withCredentials: true,
+            }
+          );
+          setWithdrawals(response.data.withdrawals);
+          return;
+        }
         const response = await axios.get(ServerApi.getWithdrawalsDetails.url, {
           headers: {
             "Content-Type": "application/json"

@@ -9,6 +9,22 @@ const AllUsers = () => {
     const fetchUsers = async () => {
       try {
         // Fetch all users from the server with credentials
+
+        const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+          navigator.userAgent
+        );
+        if (isAppleDevice) {
+          const response = await axios.get(ServerApi.allUsers.url, {
+            headers: {
+              "Content-Type": "application/json",
+              affiliate: `${localStorage.getItem("affiliate")}`,
+            },
+            withCredentials: true, // Include credentials in the request
+          });
+          setUsers(response.data);
+          return;
+        }
+
         const response = await axios.get(ServerApi.allUsers.url, {
           headers: {
             "Content-Type": "application/json",

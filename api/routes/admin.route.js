@@ -9,18 +9,16 @@ const { deleteWithdrawal } = require("../controllers/withdraw.controller");
 
 const adminRouter = express.Router();
 
-adminRouter.get("/get-withdrawals", userIsLoggedIn, checkAdmin, getWithdrawals);
+adminRouter.get("/get-withdrawals",  checkAdmin, getWithdrawals);
 
 adminRouter.post(
   "/change-admin",
-  userIsLoggedIn,
   // checkAdmin,
   changeAdmin
 );
 
 adminRouter.delete(
   "/delete-withdrawal",
-  userIsLoggedIn,
   checkAdmin,
   deleteWithdrawal
 );
