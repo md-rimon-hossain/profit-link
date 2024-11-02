@@ -9,7 +9,7 @@ const adminRouter = require("./routes/admin.route");
 const withdrawRouter = require("./routes/withdraw.route");
 
 const app = express();
-
+app.options("*", cors()); // Enables preflight requests across all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -17,9 +17,10 @@ app.use(
   cors({
     origin: ["http://localhost:5173", frontend_url],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"] // Ensure methods include OPTIONS
+    methods: ["GET", "POST", "PUT", "DELETE"] // Ensure methods include OPTIONS
   })
 );
+
 
 
 app.use("/user", registerRoutes);
