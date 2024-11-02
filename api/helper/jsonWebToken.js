@@ -48,6 +48,7 @@ const createRefreshToken = (res, user) => {
       secure: true, // Requires HTTPS
       httpOnly: true,
       sameSite: "None", // Allows cross-origin requests, more compatible on iOS
+      path: "/", // Ensure the cookie is accessible across all routes
     });
   } catch (error) {
     throw error;

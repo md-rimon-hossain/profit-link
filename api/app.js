@@ -21,7 +21,6 @@ app.use(
   })
 );
 
-app.use(express.json()); // Parse JSON bodies
 
 app.use("/user", registerRoutes);
 app.use("/auth", authRouter);
