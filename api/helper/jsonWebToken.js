@@ -40,35 +40,21 @@ const verifyJsonWebToken = (token, jwtSecretKey) => {
 
 
 
-// const createRefreshToken = (res, user) => {
-//   try {
-//     const affiliate = jwt.sign(user, refreshTokenKey, { expiresIn: "15d" });
-//     res.cookie("affiliate", affiliate, {
-//       maxAge: 15 * 24 * 60 * 60 * 1000,
-//       secure: true, // Requires HTTPS
-//       httpOnly: true,
-//       sameSite: "None", // Allows cross-origin requests, more compatible on iOS
-//       path: "/", // Ensure the cookie is accessible across all routes
-//     });
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
 const createRefreshToken = (res, user) => {
   try {
     const affiliate = jwt.sign(user, refreshTokenKey, { expiresIn: "15d" });
     res.cookie("affiliate", affiliate, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === "production", // Only true in production
+      secure: true, // Requires HTTPS
       httpOnly: true,
-      sameSite: "Lax", // Change to Lax for better compatibility
-      path: "/",
+      sameSite: "None", // Allows cross-origin requests, more compatible on iOS
+      path: "/", // Ensure the cookie is accessible across all routes
     });
   } catch (error) {
     throw error;
   }
 };
+
 
 
 
