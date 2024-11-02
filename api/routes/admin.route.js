@@ -19,7 +19,6 @@ adminRouter.post(
 
 adminRouter.delete(
   "/delete-withdrawal",
-  checkAdmin,
   deleteWithdrawal
 );
 
