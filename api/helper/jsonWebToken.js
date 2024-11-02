@@ -40,9 +40,18 @@ const verifyJsonWebToken = (token, jwtSecretKey) => {
 
 
 
-const createRefreshToken = (res, user) => {
+const createRefreshToken = (req, res, user) => {
   try {
     const affiliate = jwt.sign(user, refreshTokenKey, { expiresIn: "15d" });
+
+    const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+      req.headers["user-agent"]
+    );
+
+    if (isAppleDevice) {
+      return affiliate;
+    }
+
     res.cookie("affiliate", affiliate, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
       secure: true, // Requires HTTPS

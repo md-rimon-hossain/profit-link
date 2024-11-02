@@ -31,10 +31,9 @@ const userIsLoggedIn = async (req, res, next) => {
 
 const userIsLoggedOut = async (req, res, next) => {
   try {
-    const affiliate = req.cookies?.affiliate;
+    const affiliate = req.cookies?.affiliate || req.headers["affiliate"];
     const { email } = req.body;
 
-    console.log(affiliate);
 
     if (!affiliate) {
       return next();
@@ -42,6 +41,7 @@ const userIsLoggedOut = async (req, res, next) => {
 
     const userInfo = verifyJsonWebToken(affiliate, refreshTokenKey);
 
+    
     if (userInfo && email == userInfo.email) {
       // Check if the user exists in the database
       const user = await User.findOne({

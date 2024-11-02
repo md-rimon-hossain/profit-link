@@ -8,12 +8,35 @@ export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
   async (_, { rejectWithValue }) => {
     try {
+      const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+        navigator.userAgent
+      );
+      if (isAppleDevice) {
+        const affiliate = localStorage.getItem("affiliate");
+        console.log(affiliate);
+        const response = await axios.get(ServerApi.verifyUser.url, {
+          headers: {
+            "Content-Type": "application/json",
+            "affiliate": `${affiliate}`,
+          },
+          withCredentials: true,
+        });
+
+        const userData = response.data.user;
+        if (userData.data === null) {
+          return {};
+        }
+        return userData;
+      }
+
+      
       const response = await axios.get(ServerApi.verifyUser.url, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
+
       const userData = response.data.user;
       if (userData.data === null) {
         return {};

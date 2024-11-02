@@ -56,14 +56,24 @@ const Login = () => {
         },
         withCredentials: true,
       });
-      setLoading(false);
+
+      // Check if token needs to be stored in localStorage
+      const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(
+        navigator.userAgent
+      );
+      if (isAppleDevice) {
+        localStorage.setItem("affiliate", response.data.affiliate);
+        console.log(response.data.affiliate)
+      }
 
       // If successful, you can set a success message or redirect the user
       setSuccess(response.data.msg);
       dispatch(fetchUserDetails());
       // Optionally, redirect to a different page or perform any other actions
-     navigate('/dashboard')
+      // navigate("/dashboard");
+      console.log(response.data)
     } catch (error) {
+      console.error(error);
       if (error.response) {
         // If the server responded with an error status
         setLoading(false);
@@ -72,7 +82,6 @@ const Login = () => {
         // For unexpected errors
         setError("An unexpected error occurred. Please try again.");
       }
-      console.error(error);
     }
   };
 

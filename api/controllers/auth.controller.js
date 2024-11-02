@@ -9,7 +9,7 @@ const { refreshTokenKey } = require("../secret");
 
 const verifyUser = async (req, res, next) => {
   try {
-    const affiliate = req.cookies?.affiliate;
+    const affiliate = req.cookies?.affiliate || req?.headers["affiliate"];
 
     if (!affiliate) {
       return res.status(401).send({ msg: "Token Not found. Please login." });
@@ -39,6 +39,7 @@ const verifyUser = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   try {
     const userObj = await User.findOne({ where: { email } });
@@ -61,14 +62,18 @@ const loginUser = async (req, res, next) => {
         .json({ msg: "Email or password is not matched!!" });
     }
 
-    createRefreshToken(res, { id: userObj.id, email: userObj.email });
+    const affiliate = createRefreshToken(req, res, {
+      id: userObj.id,
+      email: userObj.email,
+    });
 
     const user = userObj.get();
 
     delete user.password;
 
-    res.status(200).json({ msg: "Logged in successfully", user });
+    res.status(200).json({ msg: "Logged in successfully", user, affiliate });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
