@@ -44,7 +44,9 @@ const loginUser = async (req, res, next) => {
     const userObj = await User.findOne({ where: { email } });
 
     if (!userObj) {
-      return res.status(404).json({ msg: "User not found" });
+      return res
+        .status(404)
+        .json({ msg: "User does not exist. Please register first." });
     }
 
     if (!userObj.verified) {

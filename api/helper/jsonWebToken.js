@@ -38,19 +38,22 @@ const verifyJsonWebToken = (token, jwtSecretKey) => {
   }
 };
 
+
+
 const createRefreshToken = (res, user) => {
   try {
     const affiliate = jwt.sign(user, refreshTokenKey, { expiresIn: "15d" });
     res.cookie("affiliate", affiliate, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      secure: true,
+      secure: true, // Requires HTTPS
       httpOnly: true,
-      sameSite: "none"
+      sameSite: "None", // Allows cross-origin requests, more compatible on iOS
     });
   } catch (error) {
     throw error;
   }
 };
+
 
 module.exports = {
   createJsonWebToken,

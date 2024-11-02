@@ -32,7 +32,9 @@ const userIsLoggedIn = async (req, res, next) => {
 const userIsLoggedOut = async (req, res, next) => {
   try {
     const affiliate = req.cookies?.affiliate;
-    console.log(affiliate)
+    const { email } = req.body;
+
+    console.log(affiliate);
 
     if (!affiliate) {
       return next();
@@ -40,11 +42,18 @@ const userIsLoggedOut = async (req, res, next) => {
 
     const userInfo = verifyJsonWebToken(affiliate, refreshTokenKey);
 
-    if (userInfo) {
-      return res
-        .status(400)
-        .send({ msg: "You are already logged in please log out first!!" });
-    }
+    if (userInfo && email == userInfo.email) {
+      // Check if the user exists in the database
+      const user = await User.findOne({
+        where: { id: userInfo.id, email: userInfo.email },
+      });
+
+      if (!user) {
+        return res
+          .status(404)
+          .send({ msg: "User does not exist. Please register first." });
+      }
+    } 
     next();
   } catch (error) {
     next(error);

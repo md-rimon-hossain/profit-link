@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios"; // Import Axios
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ServerApi from "../../../api/serverApi";
 import { useDispatch } from "react-redux";
 import { fetchUserDetails } from "../../../store/userSlice";
@@ -12,6 +12,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
 
   const [error, setError] = useState(""); // State for error messages
   const [success, setSuccess] = useState(""); // State for success messages
@@ -61,6 +62,7 @@ const Login = () => {
       setSuccess(response.data.msg);
       dispatch(fetchUserDetails());
       // Optionally, redirect to a different page or perform any other actions
+     navigate('/dashboard')
     } catch (error) {
       if (error.response) {
         // If the server responded with an error status
