@@ -28,9 +28,9 @@ app.options("*", (req, res) => {
 // Apply main CORS configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", frontend_url],
+    origin: ["http://localhost:5173", "https://profit-link.io", "http://profit-link.io" ,frontend_url],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
