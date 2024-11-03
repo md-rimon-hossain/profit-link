@@ -101,7 +101,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-100">
       <div className="flex flex-col md:flex-row">
         {/* Sidebar */}
-        <div className="fixed md:relative  flex justify-between md:block w-full md:w-1/5 h-[70px] md:h-screen bg-[#16ADAB] p-5 px-2 ">
+        <div className="fixed md:relative  flex justify-between md:block w-full md:w-1/5 h-[70px] md:h-screen bg-[#16ADAB] p-5 px-2 z-50">
           <div className="flex flex-row md:flex-col justify-center items-center">
             <div className="bg-[#3D3D3D] rounded-lg w-10 h-10 md:w-20 md:h-20">
               <img src={mainLogo} alt="" className="" />

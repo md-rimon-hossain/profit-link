@@ -70,14 +70,14 @@ const Referrals = () => {
           <div className="flex flex-col">
             <div className="flex items-center">
               <FaLink className="text-xl mr-4" />
-              <h3 className="text-lg md:text-xl font-semibold">
+              <h3 className="md:text-xm font-semibold">
                 {refLink || "Loading..."}
               </h3>
             </div>
           </div>
           <button
             onClick={handleCopy}
-            className="bg-white text-[#707070] px-2 py-2 md:px-4 md:py-2 rounded-lg flex items-center"
+            className="bg-white text-[#707070] px-2 py-2 md:px-4 md:py-2 rounded-lg flex items-center text-sm"
           >
             {isCopied ? (
               <>
