@@ -1,4 +1,4 @@
-export const backendDomain = "https://profit-link-hxbi.onrender.com";
+export const backendDomain = "https://profit-link-bu2y.onrender.com";
 // export const backendDomain = "http://localhost:5000";
 
 const ServerApi = {
